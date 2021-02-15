@@ -1,14 +1,12 @@
-const { User } = require('./../models/user');
-const auth = (req, res, next) => {
-    let token = req.cookies.auth;
-    User.findByToken(token, (err, user) => {
-        if (err) throw err;
-        if (!user)
-            return res.json({ isAuth: false });
-        req.token = token;
-        req.user = user;
-        next();
-    })
-}
+const jwt = require('jsonwebtoken');
 
-module.exports = { auth };
+module.exports = (req, res, next) => {
+    try {
+        const token = req.query.token;
+        const decodedToken = jwt.verify(token, "SUPER_SECRET_SHOULD_BE_LONGER");
+        req.userData = { userId: decodedToken.userId, email: decodedToken.email };
+        next();
+    } catch (error) {
+        res.status(401).json({ success: false, message: "Authentication failed!" });
+    }
+};

@@ -10,8 +10,5 @@ const config = {
 }
 
 exports.get  = function get (env){
-   return config[env] || config.default 
-//    return config.default 
+   return config[env] || config.default
 }
-
-//mongodb+srv://mostafa:LUjiZggnXA6agN2f@cluster0.wvo17.mongodb.net/shop?retryWrites=true&w=majority
