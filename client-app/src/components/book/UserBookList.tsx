@@ -17,6 +17,7 @@ const UserBookList: React.FC<IProps> = ({ onUserBookList, bookList, unMountUserB
         onUserBookList();
         return () => {
             unMountUserBookList();
+
         }
     }, [onUserBookList])
 
@@ -44,12 +45,12 @@ const UserBookList: React.FC<IProps> = ({ onUserBookList, bookList, unMountUserB
                                 <tr key={book._id}>
                                     <td className="capitalize">
                                         <Link className="link" to={`/edit-book/${book._id}`}>
-                                        <FontAwesome name='edit' size='lg' />
+                                            <FontAwesome name='edit' size='lg' style={{marginRight:2}} />
                                             {book.name}
                                         </Link>
                                     </td>
                                     <td className="capitalize">{book.author}</td>
-                                    <td>{book.createdAt}</td>
+                                    <td>{new Date(book.createdAt).toDateString()}</td>
                                     <td>{book.pages}</td>
                                     <td>{book.price}</td>
                                     <td>{book.rating}</td>

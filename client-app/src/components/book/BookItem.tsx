@@ -26,7 +26,7 @@ const BookItem: React.FC<IProps> = ({ book }) => {
                     <span>Rate: </span><div className="book_bubble_value"> {book.rating} </div>
                 </div>
                 <div className="book_bubble">
-                    <span>Published: </span><div className="book_bubble_value"> {book.createdAt} </div>
+                    <span>Published: </span><div className="book_bubble_value"> {new Date(book.createdAt).toDateString()} </div>
                 </div>
             </div>
         </Link>

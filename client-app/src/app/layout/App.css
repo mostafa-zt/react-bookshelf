@@ -336,7 +336,6 @@ button:hover {
   text-decoration: none;
   font-style: normal;
   transition: all 0.3s;
-  font-size: 1.6rem;
 }
 .link:hover {
   color: #ce5c5c;
@@ -349,7 +348,7 @@ tr {
   font-style: normal;
 }
 td {
-  padding: 10px 3px;
+  padding: 10px 0px;
 }
 table {
   width: 100%;
@@ -375,7 +374,6 @@ thead tr {
 }
 .capitalize {
   text-transform: capitalize;
-  font-size: 1.2rem;
 }
 * {
   -webkit-box-sizing: border-box;

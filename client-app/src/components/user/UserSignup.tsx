@@ -159,7 +159,7 @@ const UserSignup: React.FC<IProps> = ({ onSubmitSignup, login, history, unMountS
                         <button type="submit">Signup</button>
                     </div>
                     <div className="form_element text-center">
-                        If you don't have any account!
+                        If you have an account, 
                         <Link className="link link_signup" to="/login/">click here to login.</Link>
                     </div>
                 </form>

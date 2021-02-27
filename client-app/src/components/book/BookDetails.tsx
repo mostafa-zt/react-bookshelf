@@ -30,7 +30,7 @@ const BookDetails: React.FC<IProps> = ({ match, onLoadBookDetails, book, unMount
                 <h2 className="book_title">{book.name}</h2>
                 <h3 className="book_author">{book.author}</h3>
                 <div className="book_reviewer_item">
-                    <span > Published At: </span><div >{book.createdAt}</div>
+                    <span > Published At: </span><div >{new Date(book.createdAt).toDateString()}</div>
                 </div>
                 <div className="book_reviewer_item">
                     <span> Published By: </span><div className="reviewer">{book.reviewer.name + ' ' + book.reviewer.lastname}</div>
