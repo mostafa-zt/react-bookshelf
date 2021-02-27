@@ -67,7 +67,7 @@ router.post('/bookUpdate', checkAuth, checkBook(), (req, res, next) => {
     }
     Book.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, doc) => {
         if (err) return res.status(400).send(err);
-        res.json({
+        res.status(200).json({
             success: true,
             message: "The book has been successfully updated.",
             book: doc
@@ -79,12 +79,12 @@ router.delete('/deleteBook', checkAuth, (req, res, next) => {
     const id = req.query.id;
     Book.findByIdAndRemove(id, (err, doc) => {
         if (err) return res.status(400).send(err);
-        if (!doc) res.json(
+        if (!doc) res.status(404).json(
             {
                 success: false,
                 message: 'There is any book with this information!'
             });
-        res.json({
+        res.status(200).json({
             success: true,
             message: 'This book has been successfully deleted from The Book Shelf!'
         });
