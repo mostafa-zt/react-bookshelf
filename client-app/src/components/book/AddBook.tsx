@@ -201,7 +201,7 @@ const AddBook: React.FC<IProps> = ({ onSubmitForm, bookCreation, unMountBookCrea
                             type="number"
                             name='price'
                             className={!bookValidate.price.isValid && bookValidate.price.touched ? 'hasError' : ''}
-                            placeholder="Enter Price"
+                            placeholder="Enter price"
                             // value={book.price}
                             onChange={(event) => handleInputChanges(event)}
                         />

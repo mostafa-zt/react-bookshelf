@@ -21,13 +21,14 @@ interface IProps extends RouteComponentProps<IMatchParams> {
     bookEdited: IBookEdited;
     unMountBookBookValues: () => void;
     unMountEditForm: () => void;
+    onDeleteBook: (bookId: string) => void;
 }
 
 interface IMatchParams {
     id: string;
 }
 
-const AddBook: React.FC<IProps> = ({ onSubmitForm, onGetBook, bookValues, bookEdited, match, unMountBookBookValues, unMountEditForm }) => {
+const AddBook: React.FC<IProps> = ({ onSubmitForm, onGetBook, bookValues, bookEdited, match, unMountBookBookValues, unMountEditForm, onDeleteBook, history }) => {
 
     const bookValidation: IBookValidation = {
         name: {
@@ -131,6 +132,11 @@ const AddBook: React.FC<IProps> = ({ onSubmitForm, onGetBook, bookValues, bookEd
         setBookValidate({ ...bookValidate, [name]: elementValidation })
     }
 
+    const deleteBook = () => {
+        onDeleteBook(book?._id!);
+        history.push('/user-books/');
+    }
+
     return (
         <div className="container">
             <div className="form_box">
@@ -154,7 +160,7 @@ const AddBook: React.FC<IProps> = ({ onSubmitForm, onGetBook, bookValues, bookEd
                         ) : null
                 }
                 <form noValidate={true} onSubmit={(event) => submitHandler(event)} className="submitform">
-                    <h2>Add Review</h2>
+                    <h2>Edit Review</h2>
                     <div className="form_element">
                         <input
                             type="text"
@@ -217,7 +223,7 @@ const AddBook: React.FC<IProps> = ({ onSubmitForm, onGetBook, bookValues, bookEd
                             type="number"
                             name='price'
                             className={!bookValidate.price.isValid && bookValidate.price.touched ? 'hasError' : ''}
-                            placeholder="Enter Price"
+                            placeholder="Enter price"
                             value={book ? book.price : 0}
                             onChange={(event) => handleInputChanges(event)}
                         />
@@ -225,6 +231,7 @@ const AddBook: React.FC<IProps> = ({ onSubmitForm, onGetBook, bookValues, bookEd
                     </div>
                     <div className="form_element text-center">
                         <button type="submit">Submit</button>
+                        <button onClick={deleteBook} className='button button-danger' style={{marginLeft:10}} type="button">Delete</button>
                     </div>
                 </form>
             </div>
@@ -244,8 +251,8 @@ const mapDispatchToProps = (dispatch: any) => {
         onSubmitForm: (formData: BookFromValues) => dispatch(action.updateBook(formData)),
         onGetBook: (id: string) => dispatch(action.getBook(id)),
         unMountBookBookValues: () => dispatch(action.unMountBookBookValues()),
-        unMountEditForm: () => dispatch(action.unMountEditForm())
-        // unMountBookCreation: () => dispatch(unMountCreateBook())
+        unMountEditForm: () => dispatch(action.unMountEditForm()),
+        onDeleteBook: (bookId: string) => dispatch(action.deleteBook(bookId))
     }
 }
 

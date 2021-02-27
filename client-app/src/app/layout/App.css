@@ -16,6 +16,12 @@ body {
   .container {
     width: 98%;
   }
+  .box .book_title {
+    font-size: 1.5rem!important;
+  }
+  .book_header h2{
+    font-size: 1rem!important;
+  }
 }
 
 header {
@@ -171,9 +177,10 @@ header {
   letter-spacing: 4px;
 }
 .box .book_title {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   text-transform: capitalize;
   margin: 0;
+  margin-bottom: 12px;
 }
 .box .book_author {
   text-transform: capitalize;
@@ -405,7 +412,7 @@ thead tr {
   font-weight: bold;
 }
 
-.box_placeholder{
+.box_placeholder {
   text-decoration: none;
   /* display: inline-block; */
   padding: 25px 15px;
@@ -423,7 +430,7 @@ thead tr {
   height: 80px;
 }
 .lds-dual-ring:after {
-  content: " ";
+  content: ' ';
   display: block;
   width: 64px;
   height: 64px;
@@ -440,4 +447,8 @@ thead tr {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.button-danger {
+  background-color: red;
 }

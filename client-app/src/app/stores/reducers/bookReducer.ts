@@ -18,6 +18,9 @@ const bookReducer = (state: BookState, action: DispatchAction) => {
         case actionTypes.USER_BOOK_LIST: {
             return { ...state, bookList: action.payload };
         }
+        case actionTypes.UNMOUNT_USER_BOOK_LIST: {
+            return { ...state, bookList: action.payload };
+        }
         case actionTypes.BOOK_CREATION: {
             return { ...state, bookCreation: action.payload };
         }
@@ -35,6 +38,9 @@ const bookReducer = (state: BookState, action: DispatchAction) => {
         }
         case actionTypes.UNMOUNT_EDIT_FORM: {
             return { ...state, bookEdited: null };
+        }
+        case actionTypes.BOOK_DELETE: {
+            return { ...state, bookDeleted: action.payload };
         }
         default:
             return { ...state }

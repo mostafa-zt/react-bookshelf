@@ -149,7 +149,7 @@ const UserSignup: React.FC<IProps> = ({ onSubmitSignup, login, history, unMountS
                         <input
                             type="password"
                             name="confirmPassword"
-                            placeholder="Enter your Confirm Password"
+                            placeholder="Enter your password to confirm"
                             className={!userValidate.confirmPassword!.isValid && userValidate.confirmPassword!.touched ? 'hasError' : ''}
                             onChange={(event) => handleInputChanges(event)}
                         />

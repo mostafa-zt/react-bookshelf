@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react'
+import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IBook } from '../../app/models/book';
-import { getUserBookList } from '../../app/stores/actions/book';
+import * as actions from '../../app/stores/actions/book';
 
 interface IProps {
     onUserBookList: () => void,
-    bookList: IBook[]
+    bookList: IBook[],
+    unMountUserBookList: () => void
 }
 
-const UserBookList: React.FC<IProps> = ({ onUserBookList, bookList }) => {
+const UserBookList: React.FC<IProps> = ({ onUserBookList, bookList, unMountUserBookList }) => {
 
     useEffect(() => {
         onUserBookList();
+        return () => {
+            unMountUserBookList();
+        }
     }, [onUserBookList])
 
     if (!bookList) return (<div>Loading...</div>)
@@ -39,6 +44,7 @@ const UserBookList: React.FC<IProps> = ({ onUserBookList, bookList }) => {
                                 <tr key={book._id}>
                                     <td className="capitalize">
                                         <Link className="link" to={`/edit-book/${book._id}`}>
+                                        <FontAwesome name='edit' size='lg' />
                                             {book.name}
                                         </Link>
                                     </td>
@@ -64,7 +70,8 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        onUserBookList: () => dispatch(getUserBookList())
+        onUserBookList: () => dispatch(actions.getUserBookList()),
+        unMountUserBookList: () => dispatch(actions.unMountUserBookList())
     }
 }
 

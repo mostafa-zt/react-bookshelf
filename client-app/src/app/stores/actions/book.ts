@@ -147,3 +147,25 @@ export const unMountEditForm = () => {
         type: actionTypes.UNMOUNT_EDIT_FORM
     }
 }
+
+export const deleteBook = (bookId: string) => {
+    return (dispatch: DispatchType) => {
+        getAxios().delete(`deleteBook/?id=${bookId}`)
+            .then(response => { dispatch(deleteBookSuccess(response.data)) })
+            .catch(err => { })
+    }
+}
+
+const deleteBookSuccess = (data: IResponseData) => {
+    return {
+        payload: data,
+        type: actionTypes.BOOK_DELETE
+    }
+}
+
+export const unMountUserBookList = () => {
+    return {
+        payload: null,
+        type: actionTypes.UNMOUNT_BOOK_CREATION
+    }
+}
