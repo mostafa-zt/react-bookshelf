@@ -14,7 +14,7 @@ mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static('client/build'));
+app.use(express.static('client'));
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -28,12 +28,9 @@ app.use(function (req, res, next) {
 app.use('/api', userRoutes);
 app.use('/api', bookRoutes);
 
-
-if (process.env.NODE_ENV === 'production') {
-    app.get((req, res) => {
-        res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
-    })
-}
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client', 'index.html'));
+})
 
 const port = process.env.PORT || 4000;
 mongoose.connect(config.DATABASE)

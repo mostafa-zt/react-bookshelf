@@ -104,7 +104,7 @@ const UserSignup: React.FC<IProps> = ({ onSubmitSignup, login, history, unMountS
                         ))}
                     </div> : null}
                 <form noValidate={true} onSubmit={submitHandler} className="submitform">
-                    <h2>Login</h2>
+                    <h2>Signup</h2>
                     <div className="form_element">
                         <input
                             type="email"
@@ -133,7 +133,7 @@ const UserSignup: React.FC<IProps> = ({ onSubmitSignup, login, history, unMountS
                             className={!userValidate.lastname.isValid && userValidate.lastname.touched ? 'hasError' : ''}
                             onChange={(event) => handleInputChanges(event)}
                         />
-                        {!userValidate.lastname.isValid && userValidate.lastname.touched && <span className='error_msg'>Please last name</span>}
+                        {!userValidate.lastname.isValid && userValidate.lastname.touched && <span className='error_msg'>Please enter last name</span>}
                     </div>
                     <div className="form_element">
                         <input
