@@ -7,7 +7,7 @@ const { User } = require('../models/user');
 const { Book } = require('../models/book');
 const checkAuth = require('../middleware/auth');
 const { checkSignup } = require('../middleware/validator');
-
+const config = require('../config/config').get(process.env.NODE_ENV);
 
 const router = express.Router();
 
@@ -53,7 +53,7 @@ router.post("/signup", checkSignup(), (req, res, next) => {
             user.save((err, user) => {
                 if (err) return res.status(500).json({ success: false, messages: [{ msg: "An error occurred while registering the user " }] });
                 if (user) {
-                    const token = jwt.sign({ email: user.email, userId: user._id }, "SUPER_SECRET_SHOULD_BE_LONGER", { expiresIn: "1h" });
+                    const token = jwt.sign({ email: user.email, userId: user._id }, config.SECRET, { expiresIn: "1h" });
                     return res.status(201).json({
                         success: true,
                         expiresIn: 3600,
@@ -86,7 +86,7 @@ router.post('/login', (req, res, next) => {
         bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err) res.status(500).json({ success: false, messages: [{ msg: "An error occurred while comparing the passowrd" }] });
             if (isMatch) {
-                const token = jwt.sign({ email: user.email, userId: user._id }, "SUPER_SECRET_SHOULD_BE_LONGER", { expiresIn: "1h" });
+                const token = jwt.sign({ email: user.email, userId: user._id }, config.SECRET, { expiresIn: "1h" });
                 return res.status(200).json({ token: token, success: true, expiresIn: 3600, email: user.email }); // ==> 3600 seconds = 1 hour
             }
             errors.push({ msg: "There is not any account with this information!", param: '' });
