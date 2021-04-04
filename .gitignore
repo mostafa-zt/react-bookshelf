@@ -3,4 +3,5 @@ node_modules/
 react-bookshelf.zip
 build/
 client/
+config.js
 
