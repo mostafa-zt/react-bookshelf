@@ -32,7 +32,7 @@ const bookSchema = mongoose.Schema({
         require: true
     },
     imageUrl: {
-        required: true,
+        required: false,
         type: String
     },
     publicId: {

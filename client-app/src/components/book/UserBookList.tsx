@@ -51,7 +51,7 @@ const UserBookList: React.FC<IProps> = ({ onUserBookList, bookList, unMountUserB
                                                         <div key={book._id} role="listitem" className="w-dyn-item">
                                                             <div className="shop-item-wrapper">
                                                                 <div className="shop-item-link-wrapper w-inline-block">
-                                                                    <div style={{ backgroundImage: "url('" + book.imageUrl + "')" }}
+                                                                <div style={{ backgroundImage: "url('" + (book.imageUrl ? book.imageUrl : './images/book_image_default.png') + "')" }}
                                                                         className="shop-image tumbler-1 narrow-list">
                                                                         <div className="description">
                                                                             <p>

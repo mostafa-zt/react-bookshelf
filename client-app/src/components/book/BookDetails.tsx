@@ -37,7 +37,7 @@ const BookDetails: React.FC<IProps> = ({ match, onLoadBookDetails, book, unMount
                 <div className="container">
                     <div className="shopping-page-wrapper">
                         <div className="shopping-page-left">
-                            <div style={{ backgroundImage: "url('" + book.imageUrl + "')" }}
+                            <div style={{ backgroundImage: "url('" + (book.imageUrl ? book.imageUrl : '../images/book_image_default.png') + "')" }}
                                 className="shopping-page-image">
                             </div>
                         </div>

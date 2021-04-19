@@ -11,7 +11,7 @@ const BookItem: React.FC<IProps> = ({ book }) => {
         <div role="listitem" className="w-dyn-item">
             <div className="shop-item-wrapper">
                 <Link to={`/book-details/${book._id}`} className='bookitem shop-item-link-wrapper w-inline-block'>
-                <div style={{ backgroundImage: "url('" + book.imageUrl + "')" }}
+                <div style={{ backgroundImage: "url('" + (book.imageUrl ? book.imageUrl : './images/book_image_default.png') + "')" }}
                         className="shop-image tumbler-1">
                         <div className="pill-2 badge primary sale w-condition-invisible">
                             New

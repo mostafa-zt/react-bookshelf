@@ -12,7 +12,7 @@ interface IBookValidation {
     price: { validation: { required: boolean, maxLenght: number, minLenght: number }, isValid: boolean, touched: boolean }
     rating: { validation: { required: boolean, maxLenght: number, minLenght: number }, isValid: boolean, touched: boolean }
     pages: { validation: { required: boolean, maxLenght: number, minLenght: number }, isValid: boolean, touched: boolean }
-    image: { validation: { required: boolean }, isValid: boolean, touched: boolean }
+    // image: { validation: { required: boolean }, isValid: boolean, touched: boolean }
 }
 
 interface IProps extends RouteComponentProps {
@@ -78,13 +78,13 @@ const AddBook: React.FC<IProps> = ({ onSubmitForm, history, bookCreation, unMoun
             isValid: true,
             touched: false
         },
-        image: {
-            validation: {
-                required: true
-            },
-            isValid: true,
-            touched: false
-        }
+        // image: {
+        //     validation: {
+        //         required: true
+        //     },
+        //     isValid: true,
+        //     touched: false
+        // }
     }
 
 

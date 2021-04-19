@@ -59,6 +59,10 @@ router.post('/book', checkAuth, upload.single('image'), checkBook(), async (req,
             book.publicId = uplaodResult.public_id;
         }
     }
+    else {
+        book.imageUrl = '';
+        book.publicId = '';
+    }
 
     book.save((err, doc) => {
         if (err) return res.status(400).send(err);
@@ -83,7 +87,8 @@ router.post('/bookUpdate', checkAuth, upload.single('image'), checkBook(), async
     if (req.file) {
         const uplaodResult = await cloudinaryUtility.streamUpload(req.file);
         if (uplaodResult) {
-            await cloudinaryUtility.removeFile(book.publicId);
+            if (book.publicId)
+                await cloudinaryUtility.removeFile(book.publicId);
             book.imageUrl = uplaodResult.url;
             book.publicId = uplaodResult.public_id;
         }
