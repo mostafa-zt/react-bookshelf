@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { IBook } from '../../app/models/book';
@@ -25,29 +25,44 @@ const BookDetails: React.FC<IProps> = ({ match, onLoadBookDetails, book, unMount
     if (!book) return (<BookDetailsLoader />)
 
     return (
-        <div className="container">
-            <div className="box">
-                <h2 className="book_title">{book.name}</h2>
-                <h3 className="book_author">{book.author}</h3>
-                <div className="book_reviewer_item">
-                    <span > Published At: </span><div >{new Date(book.createdAt).toDateString()}</div>
-                </div>
-                <div className="book_reviewer_item">
-                    <span> Published By: </span><div className="reviewer">{book.reviewer.name + ' ' + book.reviewer.lastname}</div>
-                </div>
-                <div className="book_review">
-                    <p>
-                        {book.review}
-                    </p>
-                </div>
-                <div className="book_reviewer_item">
-                    <span> Rating: </span><div>{book.rating}</div>
-                </div>
-                <div className="book_reviewer_item">
-                    <span> Price: </span><div>$ {book.price}</div>
+        <Fragment>
+            <div className="page-title-section">
+                <div className="container">
+                    <h1 className="page-title">
+                        {book.name}
+                    </h1>
                 </div>
             </div>
-        </div>
+            <div className="content-section">
+                <div className="container">
+                    <div className="shopping-page-wrapper">
+                        <div className="shopping-page-left">
+                            <div style={{ backgroundImage: "url('" + book.imageUrl + "')" }}
+                                className="shopping-page-image">
+                            </div>
+                        </div>
+                        <div className="shipping-page-right">
+                            <h2 className="page-product-headin">
+                                {book.name}
+                            </h2>
+                            <div className="w-richtext">
+                                <h2>What’s this book about?</h2>
+                                <h3>{book.author}</h3>
+                                <p>
+                                    {book.review}
+                                </p>
+                                <div className="book-details">
+                                    <span>Published At: {new Date(book.createdAt).toDateString()}</span>
+                                    <span>Published By: {book.reviewer.name + ' ' + book.reviewer.lastname}</span>
+                                    <span>Rating: {book.rating}</span>
+                                    <span>Price: $ {book.price}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Fragment>
     )
 }
 

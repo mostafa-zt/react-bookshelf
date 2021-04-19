@@ -6,6 +6,9 @@ const bookReducer = (state: BookState, action: DispatchAction) => {
         case actionTypes.LOAD_BOOK_LIST: {
             return { ...state, books: action.payload };
         }
+        case actionTypes.LOADNEWBOOK: {
+            return { ...state, newBooks: action.payload };
+        }
         case actionTypes.UNMOUNT_LOAD_BOOK_LIST: {
             return { ...state, books: action.payload };
         }
@@ -40,7 +43,7 @@ const bookReducer = (state: BookState, action: DispatchAction) => {
             return { ...state, bookEdited: null };
         }
         case actionTypes.BOOK_DELETE: {
-            return { ...state, bookDeleted: action.payload };
+            return { ...state, bookDeleted: action.payload, bookList: state.bookList.filter(b => b._id !== (action.payload as any).book._id) };
         }
         default:
             return { ...state }

@@ -9,7 +9,9 @@ export interface IBook {
     rating: number;
     review: string;
     updatedAt: Date;
-    reviewer: IReviewer
+    reviewer: IReviewer;
+    imageUrl: string;
+    image: ArrayBuffer | null;
 }
 
 export interface IBookFromValues extends Partial<IBook> {
@@ -28,6 +30,8 @@ export class BookFromValues implements IBookFromValues {
     price: number = 0;
     rating: number = 1;
     review: string = '';
+    imageUrl: string = '';
+    image: ArrayBuffer | null = null;
 }
 
 export interface IReviewer {
@@ -36,7 +40,8 @@ export interface IReviewer {
 }
 
 export type BookState = {
-    books: IBook[]
+    books: IBook[];
+    bookList : IBook[];
 }
 
 export type DispatchAction = {

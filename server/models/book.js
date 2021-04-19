@@ -30,7 +30,15 @@ const bookSchema = mongoose.Schema({
     ownerId: {
         type: String,
         require: true
+    },
+    imageUrl: {
+        required: true,
+        type: String
+    },
+    publicId: {
+        type: String
     }
+
 }, { timestamps: true })
 
 const Book = mongoose.model('Book', bookSchema);

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion';
+import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom'
 import { IUserValidation, UserFromValues, IUserLoginResponse } from '../../app/models/UserLogin';
@@ -73,49 +74,87 @@ const UserLogin: React.FC<IProps> = ({ onSubmitLogin, login, history, unMoundLog
         setUserValidate({ ...userValidate, [name]: elementValidation })
     }
 
+    const pageVariants = {
+        initial: {
+            opacity: 0,
+            y: "-100%",
+            scale: 0.8
+        },
+        in: {
+            opacity: 1,
+            y: 0,
+            scale: 1
+        },
+        out: {
+            opacity: 0,
+            y: "100%",
+            scale: 1.2
+        }
+    }
+
+    const pageTransition = {
+        transition: "linear",
+        duration: 0.4
+        // type:"tween",
+        // ease:"anticipate",
+        // duration:3
+    }
+
     return (
-        <div className="container">
-            <div className="form_box">
-                {loginError && !loginError.success ?
-                    <div className='user_msg show danger'>
-                        {loginError.messages.map((message: any, i: number) => (
-                            <div key={i}>{message.msg}</div>
-                        ))}
-                    </div> : null}
-                <form noValidate={true} onSubmit={submitHandler} className="submitform">
-                    <h2>Login</h2>
-                    <div className="form_element">
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            name="email"
-                            // value={this.state.email}
-                            className={!userValidate.email.isValid && userValidate.email.touched ? 'hasError' : ''}
-                            onChange={(event) => handleInputChanges(event)}
-                        />
-                        {!userValidate.email.isValid && userValidate.email.touched && <span className='error_msg'>Please enter email</span>}
+        <motion.div exit="out" animate="in" initial="initial" variants={pageVariants} transition={pageTransition}>
+            <Fragment>
+                <div className="page-title-section">
+                    <div className="container">
+                        <h1 className="page-title">Login</h1>
                     </div>
-                    <div className="form_element">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            // value={this.state.password}
-                            className={!userValidate.password.isValid && userValidate.password.touched ? 'hasError' : ''}
-                            onChange={(event) => handleInputChanges(event)}
-                        />
-                        {!userValidate.password.isValid && userValidate.password.touched && <span className='error_msg'>Please enter password</span>}
+                </div>
+                <div id="login" className="content-section">
+                    <div className="container">
+                        <div className="form-wrapper">
+                            <div className="form-side">
+                                <h2>Login to <b>Bookshelf</b></h2>
+                            </div>
+                            <div className="form-main">
+                                <div className="w-form">
+                                    {loginError && !loginError.success ?
+                                        <div className='user_msg show danger'>
+                                            {loginError.messages.map((message: any, i: number) => (
+                                                <div key={i}>{message.msg}</div>
+                                            ))}
+                                        </div> : null}
+                                    <form noValidate={true} onSubmit={submitHandler} className="submitform">
+                                        <label>Email</label>
+                                        <input type="email"
+                                            placeholder="Enter your email"
+                                            name="email"
+                                            // value={this.state.email}
+                                            className={!userValidate.email.isValid && userValidate.email.touched ? 'input w-input hasError' : 'input w-input'}
+                                            onChange={(event) => handleInputChanges(event)}
+                                        />
+                                        {!userValidate.email.isValid && userValidate.email.touched && <span className='error_msg'>Please enter email</span>}
+                                        <label>Password</label>
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            placeholder="Enter your password"
+                                            // value={this.state.password}
+                                            className={!userValidate.password.isValid && userValidate.password.touched ? 'input w-input hasError' : 'input w-input'}
+                                            onChange={(event) => handleInputChanges(event)}
+                                        />
+                                        {!userValidate.password.isValid && userValidate.password.touched && <span className='error_msg'>Please enter password</span>}
+                                        <button type="submit" className="btn w-button">Login</button>
+                                    </form>
+                                    <div className='login-or-signup-box'>
+                                        If you don't have any account!
+                                <Link className="link" to="/signup/">click here to signup.</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="form_element text-center">
-                        <button type="submit">Login</button>
-                    </div>
-                    <div className="form_element text-center">
-                        If you don't have any account!
-                        <Link className="link link_signup" to="/signup/">click here to signup.</Link>
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>
+            </Fragment>
+        </motion.div>
     )
 }
 

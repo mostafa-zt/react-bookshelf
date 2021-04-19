@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { IBook } from '../../app/models/book';
 
@@ -8,28 +8,45 @@ interface IProps {
 
 const BookItem: React.FC<IProps> = ({ book }) => {
     return (
-        <Link to={`/book-details/${book._id}`} className='bookitem' >
-            <div className="book_header">
-                <h2>{book.name}</h2>
+        <div role="listitem" className="w-dyn-item">
+            <div className="shop-item-wrapper">
+                <Link to={`/book-details/${book._id}`} className='bookitem shop-item-link-wrapper w-inline-block'>
+                <div style={{ backgroundImage: "url('" + book.imageUrl + "')" }}
+                        className="shop-image tumbler-1">
+                        <div className="pill-2 badge primary sale w-condition-invisible">
+                            New
+                        </div>
+                        <div className="description">
+                            <p>
+                                {book.author}
+                            </p>
+                            <p>
+                                Rate: {book.rating}
+                            </p>
+                            <p>
+                                Published: {new Date(book.createdAt).toDateString()}
+                            </p>
+                            {/* <p>
+                                Published By: {book.reviewer.name + ' ' + book.reviewer.lastname}
+                            </p> */}
+                        </div>
+                    </div>
+                    <div className="shop-details-wrapper">
+                        <div className="shop-details-left">
+                            <div className="shop-item-name">
+                               {book.name}
+                            </div>
+                            <div className="price-wrapper">
+                                $ {book.price}
+                    </div>
+                        </div>
+                    </div>
+                </Link>
+                <div className="shop-button-wrapper">
+                    <Link to={`/book-details/${book._id}`} className="btn w-button">Details</Link>
+                </div>
             </div>
-            <div className="book_info">
-                <div className="book_bubble book_author">
-                    {book.author}
-                </div>
-                <div className="book_bubble">
-                    <span>Price: </span><div className="book_bubble_value">$ {book.price} </div>
-                </div>
-                <div className="book_bubble">
-                    <span>Page: </span><div className="book_bubble_value"> {book.pages} </div>
-                </div>
-                <div className="book_bubble">
-                    <span>Rate: </span><div className="book_bubble_value"> {book.rating} </div>
-                </div>
-                <div className="book_bubble">
-                    <span>Published: </span><div className="book_bubble_value"> {new Date(book.createdAt).toDateString()} </div>
-                </div>
-            </div>
-        </Link>
+        </div>
     )
 }
 

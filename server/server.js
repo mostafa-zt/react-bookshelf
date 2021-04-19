@@ -11,13 +11,16 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 
+// for parsing application/json
 app.use(express.json());
+// for parsing application/xwww-
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('client'));
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Content-Length, Accept");
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });

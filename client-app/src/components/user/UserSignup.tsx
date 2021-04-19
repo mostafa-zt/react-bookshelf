@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { IUserSignupValidation, UserSignupFromValues, IUserLoginResponse } from '../../app/models/UserSignup';
@@ -94,77 +95,113 @@ const UserSignup: React.FC<IProps> = ({ onSubmitSignup, login, history, unMountS
         setUserValidate({ ...userValidate, [name]: elementValidation })
     }
 
+    const pageVariants = {
+        initial: {
+            opacity: 0,
+            y: "-100%",
+            scale: 0.8
+        },
+        in: {
+            opacity: 1,
+            y: 0,
+            scale: 1
+        },
+        out: {
+            opacity: 0,
+            y: "100%",
+            scale: 1.2
+        }
+    }
+
+    const pageTransition = {
+        transition: "linear",
+        duration: 0.4
+        // type:"tween",
+        // ease:"anticipate",
+        // duration:3
+    }
+
     return (
-        <div className="container">
-            <div className="form_box">
-                {signupError && !signupError.success ?
-                    <div className='user_msg show danger'>
-                        {signupError.messages.map((message: any, i: number) => (
-                            <div key={i}>{message.msg}</div>
-                        ))}
-                    </div> : null}
-                <form noValidate={true} onSubmit={submitHandler} className="submitform">
-                    <h2>Signup</h2>
-                    <div className="form_element">
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            name="email"
-                            className={!userValidate.email.isValid && userValidate.email.touched ? 'hasError' : ''}
-                            onChange={(event) => handleInputChanges(event)}
-                        />
-                        {!userValidate.password.isValid && userValidate.password.touched && <span className='error_msg'>Please enter email</span>}
+        <motion.div exit="out" animate="in" initial="initial" variants={pageVariants} transition={pageTransition}>
+            <Fragment>
+                <div className="page-title-section">
+                    <div className="container">
+                        <h1 className="page-title">Signup</h1>
                     </div>
-                    <div className="form_element">
-                        <input
-                            type="text"
-                            placeholder="Enter your first name"
-                            name="name"
-                            className={!userValidate.name.isValid && userValidate.name.touched ? 'hasError' : ''}
-                            onChange={(event) => handleInputChanges(event)}
-                        />
-                        {!userValidate.name.isValid && userValidate.name.touched && <span className='error_msg'>Please enter first name</span>}
+                </div>
+                <div id="login" className="content-section">
+                    <div className="container">
+                        <div className="form-wrapper">
+                            <div className="form-side">
+                                <h2>Login to <b>Bookshelf</b></h2>
+                            </div>
+                            <div className="form-main">
+                                <div className="w-form">
+                                    {signupError && !signupError.success ?
+                                        <div className='user_msg show danger'>
+                                            {signupError.messages.map((message: any, i: number) => (
+                                                <div key={i}>{message.msg}</div>
+                                            ))}
+                                        </div> : null}
+                                    <form noValidate={true} onSubmit={submitHandler} className="submitform">
+                                        <label>Email</label>
+                                        <input
+                                            type="email"
+                                            placeholder="Enter your email"
+                                            name="email"
+                                            className={!userValidate.email.isValid && userValidate.email.touched ? 'hasError' : ''}
+                                            onChange={(event) => handleInputChanges(event)}
+                                        />
+                                        {!userValidate.password.isValid && userValidate.password.touched && <span className='error_msg'>Please enter email</span>}
+                                        <label>Name</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter your first name"
+                                            name="name"
+                                            className={!userValidate.name.isValid && userValidate.name.touched ? 'hasError' : ''}
+                                            onChange={(event) => handleInputChanges(event)}
+                                        />
+                                        {!userValidate.name.isValid && userValidate.name.touched && <span className='error_msg'>Please enter first name</span>}
+                                        <label>Lastname</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter your last name"
+                                            name="lastname"
+                                            className={!userValidate.lastname.isValid && userValidate.lastname.touched ? 'hasError' : ''}
+                                            onChange={(event) => handleInputChanges(event)}
+                                        />
+                                        {!userValidate.lastname.isValid && userValidate.lastname.touched && <span className='error_msg'>Please enter last name</span>}
+                                        <label>Password</label>
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            placeholder="Enter your password"
+                                            className={!userValidate.password.isValid && userValidate.password.touched ? 'hasError' : ''}
+                                            onChange={(event) => handleInputChanges(event)}
+                                        />
+                                        {!userValidate.email.isValid && userValidate.email.touched && <span className='error_msg'>Please enter password</span>}
+                                        <label>Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            name="confirmPassword"
+                                            placeholder="Enter your password to confirm"
+                                            className={!userValidate.confirmPassword!.isValid && userValidate.confirmPassword!.touched ? 'hasError' : ''}
+                                            onChange={(event) => handleInputChanges(event)}
+                                        />
+                                        {!userValidate.confirmPassword!.isValid && userValidate.confirmPassword!.touched && <span className='error_msg'>Please enter password</span>}
+                                        <button type="submit" className="btn w-button">Signup</button>
+                                    </form>
+                                    <div className='login-or-signup-box'>
+                                        If you have an account,
+                                    <Link className="link" to="/login/">click here to login.</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="form_element">
-                        <input
-                            type="text"
-                            placeholder="Enter your last name"
-                            name="lastname"
-                            className={!userValidate.lastname.isValid && userValidate.lastname.touched ? 'hasError' : ''}
-                            onChange={(event) => handleInputChanges(event)}
-                        />
-                        {!userValidate.lastname.isValid && userValidate.lastname.touched && <span className='error_msg'>Please enter last name</span>}
-                    </div>
-                    <div className="form_element">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            className={!userValidate.password.isValid && userValidate.password.touched ? 'hasError' : ''}
-                            onChange={(event) => handleInputChanges(event)}
-                        />
-                        {!userValidate.email.isValid && userValidate.email.touched && <span className='error_msg'>Please enter password</span>}
-                    </div>
-                    <div className="form_element">
-                        <input
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="Enter your password to confirm"
-                            className={!userValidate.confirmPassword!.isValid && userValidate.confirmPassword!.touched ? 'hasError' : ''}
-                            onChange={(event) => handleInputChanges(event)}
-                        />
-                        {!userValidate.confirmPassword!.isValid && userValidate.confirmPassword!.touched && <span className='error_msg'>Please enter password</span>}
-                    </div>
-                    <div className="form_element text-center">
-                        <button type="submit">Signup</button>
-                    </div>
-                    <div className="form_element text-center">
-                        If you have an account, 
-                        <Link className="link link_signup" to="/login/">click here to login.</Link>
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>
+            </Fragment>
+        </motion.div>
     )
 }
 

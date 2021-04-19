@@ -1,10 +1,13 @@
+import { AnimatePresence } from 'framer-motion'
 import React, { Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Redirect, Route, Switch } from 'react-router'
+import { Redirect, Route, Switch, useLocation } from 'react-router'
 import AddBook from '../../components/book/AddBook'
 import BookDetails from '../../components/book/BookDetails'
 import EditBook from '../../components/book/EditBook'
 import UserBookList from '../../components/book/UserBookList'
+import Books from '../../components/books/Books'
+import Footer from '../../components/footer/Footer'
 import Navbar from '../../components/header/Navbar'
 import Home from '../../components/home/Home'
 import UserLogin from '../../components/user/UserLogin'
@@ -25,30 +28,38 @@ const Routes: React.FC<IProps> = ({ onTryAutoSignIn, isAuthenticated, userEmail 
         onTryAutoSignIn();
     }, [])
 
+    const location = useLocation();
+
     let routes = null;
     if (isAuthenticated) {
         routes = (
-            <Switch >
-                <Route exact path='/' component={Home}></Route>
-                <Route path='/book-details/:id' component={BookDetails}></Route>
-                <Route path='/user-books/' component={UserBookList}></Route>
-                <Route path='/user-profile/' component={UserProfile}></Route>
-                <Route path='/add-book/' component={AddBook}></Route>
-                <Route path='/edit-book/:id' component={EditBook}></Route>
-                <Route path='/logout/' component={UserLogout}></Route>
-                <Redirect to='/' />
-            </Switch>
+            <AnimatePresence exitBeforeEnter>
+                <Switch>
+                    <Route exact path='/' component={Home}></Route>
+                    <Route path='/books' component={Books}></Route>
+                    <Route path='/book-details/:id' component={BookDetails}></Route>
+                    <Route path='/user-books/' component={UserBookList}></Route>
+                    <Route path='/user-profile/' component={UserProfile}></Route>
+                    <Route path='/add-book/' component={AddBook}></Route>
+                    <Route path='/edit-book/:id' component={EditBook}></Route>
+                    <Route path='/logout/' component={UserLogout}></Route>
+                    <Redirect to='/' />
+                </Switch>
+            </AnimatePresence>
         )
     }
     else {
         routes = (
-            <Switch >
-                <Route exact path='/' component={Home}></Route>
-                <Route path='/book-details/:id' component={BookDetails}></Route>
-                <Route path='/login/' component={UserLogin}></Route>
-                <Route path='/signup/' component={UserSignup}></Route>
-                <Redirect to='/' />
-            </Switch>
+            <AnimatePresence exitBeforeEnter>
+                <Switch>
+                    <Route exact path='/' component={Home}></Route>
+                    <Route path='/books' component={Books}></Route>
+                    <Route path='/book-details/:id' component={BookDetails}></Route>
+                    <Route path='/login/' component={UserLogin}></Route>
+                    <Route path='/signup/' component={UserSignup}></Route>
+                    <Redirect to='/' />
+                </Switch>
+            </AnimatePresence>
         )
     }
 
@@ -56,6 +67,7 @@ const Routes: React.FC<IProps> = ({ onTryAutoSignIn, isAuthenticated, userEmail 
         <Fragment>
             <Navbar isAuthenticated={isAuthenticated} userEmail={userEmail} />
             {routes}
+            <Footer />
         </Fragment>
     )
 }

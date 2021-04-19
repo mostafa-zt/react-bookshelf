@@ -39,6 +39,23 @@ export const loadBookList = (limit = 10, start = 0, order = 'asc', list: IBook[]
             });
     }
 }
+export const loadNewBookList = () => {
+    return (dispatch: DispatchType) => {
+        getAxios().get('/get-new-books/').then(sleep(500))
+            .then(response => {
+                dispatch(loadNewBookListSuccess(response.data))
+            })
+            .catch(error => {
+                dispatch(loadBookListFaild(error))
+            });
+    }
+}
+const loadNewBookListSuccess = (data: IBook): DispatchAction => {
+    return {
+        payload: data,
+        type: actionTypes.LOADNEWBOOK
+    }
+}
 
 const loadBookDetailsSuccess = (data: IBook): DispatchAction => {
     return {
@@ -81,7 +98,7 @@ const getUserBookListSuccess = (data: IBook[]): DispatchAction => {
 
 export const getUserBookList = () => {
     return (dispatch: DispatchType) => {
-        getAxios().get(`/getUserPosts/`)
+        getAxios().get(`/getUserPosts/`).then(sleep(500))
             .then(response => dispatch(getUserBookListSuccess(response.data)))
             .catch(error => { })
     }
@@ -93,7 +110,7 @@ const createBookSucccss = (data: IResponseData): DispatchAction => {
         type: actionTypes.BOOK_CREATION
     }
 }
-export const createBook = (book: BookFromValues) => {
+export const createBook = (book: FormData) => {
     return (dispatch: DispatchType) => {
         getAxios().post('/book/', book)
             .then(response => {
@@ -122,7 +139,7 @@ const getBookSuccess = (data: IBook): DispatchAction => {
     }
 }
 
-export const updateBook = (data: BookFromValues) => {
+export const updateBook = (data: FormData) => {
     return (dispatch: DispatchType) => {
         getAxios().post('/bookUpdate/', data)
             .then(response => dispatch(updateBookSuccess(response.data)));
@@ -166,6 +183,6 @@ const deleteBookSuccess = (data: IResponseData) => {
 export const unMountUserBookList = () => {
     return {
         payload: null,
-        type: actionTypes.UNMOUNT_BOOK_CREATION
+        type: actionTypes.UNMOUNT_USER_BOOK_LIST
     }
 }
